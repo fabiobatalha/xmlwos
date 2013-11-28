@@ -124,7 +124,7 @@ def get_take_off_files_from_ftp(ftp_host='localhost',
 
     ftp = ftp_connect(ftp_host=ftp_host, user=user, passwd=passwd)
     ftp.cwd('controller')
-    report_files = ftp.nlst('takeoff_*.txt')
+    report_files = ftp.nlst('takeoff_*.del')
     with open('controller/takeoff.txt', 'wb') as f:
         def callback(data):
             f.write(data)
