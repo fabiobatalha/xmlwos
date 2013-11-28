@@ -36,5 +36,5 @@ for reg in regs:
     issn = reg['code'][1:10].upper()
     if issn in urls:
         coll.update({'code': reg['code']}, {'$set': {'title.v690': [{'_': urls[issn]}]}}, True)
-    if issn in acronym:
+    if issn in collections:
         coll.update({'code': reg['code']}, {'$set': {'collection': collection[issn]}}, True)
