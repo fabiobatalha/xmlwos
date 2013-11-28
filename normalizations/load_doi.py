@@ -21,4 +21,6 @@ with open('dois.txt') as f:
 regs = coll.find({'article.doi': {'$exists': 0}}, {'code': 1})
 
 for reg in regs:
-    coll.update({'code': reg['code']}, {'$set': {'article.doi': pids_doi[reg['code']]}})
+    if reg['code'] in pids_doi:
+        print 'including doi for %s' % reg['code']
+        coll.update({'code': reg['code']}, {'$set': {'article.doi': pids_doi[reg['code']]}})
