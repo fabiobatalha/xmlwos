@@ -120,7 +120,7 @@ class Normalization(object):
                 self._coll.update({'code': record['code']},
                                  {'$set': {field: record[context][context_field], 'normalized': normalized}})
 
-        fl = codecs.open('notfound_{0}.txt'.format(field), 'w', encoding='utf-8')
+        fl = codecs.open('notfound_{0}.{1}.txt'.format(field, write_into), 'w', encoding='utf-8')
         for term in not_found:
             fl.write(u'{0}\r\n'.format(term))
 
