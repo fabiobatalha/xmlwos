@@ -15,7 +15,7 @@ for coll in $colls;
 do
     echo "Creating now "$coll" master files"
     scp $processing_user@$processing_server:/bases/org.000/iso/art.$coll/artigo.iso ../iso/$coll/artigo.iso
-    scp $processing_user@$processing_server:/bases/org.000/iso/iss.$coll/title.iso ../iso/$coll/title.iso
+    scp $processing_user@$processing_server:/bases/org.000/iso/tit.$coll/title.iso ../iso/$coll/title.iso
     scp $processing_user@$processing_server:/bases/org.000/iso/b4c.$coll/bib4cit.iso ../iso/$coll/bib4cit.iso
     $cisis_dir/mx iso=../iso/$coll/artigo.iso append=../../databases/isis/artigo -all now
     $cisis_dir/mx iso=../iso/$coll/title.iso append=../../databases/isis/title -all now
