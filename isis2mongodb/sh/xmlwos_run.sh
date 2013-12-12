@@ -3,6 +3,9 @@
 echo "Script running with CISIS version:"
 $cisis_dir/mx what
 
+mkdir -p ../../databases
+mkdir -p ../iso
+
 colls=`ls -1 ../iso`
 rm -f ../../databases/isis/artigo.*
 rm -f ../../databases/isis/title.*
@@ -11,20 +14,20 @@ rm -f ../../databases/isis/bib4cit.*
 for coll in $colls;
 do
     echo "Creating now "$coll" master files"
-    isos=`ls -1 ../iso/$coll/`
-    for iso in $isos;
-    do
-        echo "Creating master files for "$iso
-        dot_iso=`expr index "$iso" 1.`-1
-        database_name=${iso:0:$dot_iso}
-        $cisis_dir/mx iso=../iso/$coll/$iso append=../../databases/isis/$database_name -all now
-    done
+    scp $processing_user@$processing_server:/bases/org.000/iso/art.$coll/artigo.iso ../iso/$coll/artigo.iso
+    scp $processing_user@$processing_server:/bases/org.000/iso/iss.$coll/title.iso ../iso/$coll/title.iso
+    scp $processing_user@$processing_server:/bases/org.000/iso/b4c.$coll/bib4cit.iso ../iso/$coll/bib4cit.iso
+    $cisis_dir/mx iso=../iso/$coll/artigo.iso append=../../databases/isis/artigo -all now
+    $cisis_dir/mx iso=../iso/$coll/title.iso append=../../databases/isis/title -all now
+    $cisis_dir/mx iso=../iso/$coll/bib4cit.iso append=../../databases/isis/bib4cit -all now
 done
 
 echo "Indexing databases according to FSTs"
 $cisis_dir/mx ../../databases/isis/artigo  fst="@../fst/artigo.fst"  fullinv/ansi=../../databases/isis/artigo  tell=1000  -all now
 $cisis_dir/mx ../../databases/isis/title   fst="@../fst/title.fst"   fullinv/ansi=../../databases/isis/title   tell=10    -all now
 $cisis_dir/mx ../../databases/isis/bib4cit fst="@../fst/bib4cit.fst" fullinv/ansi=../../databases/isis/bib4cit tell=10000 -all now
+
+exit
 
 echo "Creating articles processing list"
 from=$1

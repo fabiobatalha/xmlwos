@@ -246,8 +246,9 @@ def get_collection(mongodb_host='localhost',
     coll.ensure_index('applicable')
     coll.ensure_index('article_title_md5')
     coll.ensure_index('article_title_no_accents')
-    coll.ensure_index('citations_title_md5')
     coll.ensure_index('citations_title_no_accents')
+    coll.ensure_index('article_title_author_year_no_accents')
+    coll.ensure_index('citations_title_author_year_no_accents')
     coll.ensure_index('article.doi')
 
     return coll
